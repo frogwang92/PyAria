@@ -1,0 +1,2 @@
+class BackTestBuyAndHold(object):
+    pass

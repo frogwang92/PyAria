@@ -1,2 +1,7 @@
 import tushare as ts
-print ts.get_today_ticks('600000')
+import pandas as pd
+
+
+df = ts.get_tick_data('600000', date='2016-11-18')
+df.to_csv('test.csv')
+print df
