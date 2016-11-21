@@ -12,17 +12,20 @@ class Engine(subject.Subject):
         self.ev_data = subject.Event()
         self.__feed = fd.TickFeed("test.csv")
         self.__algorithm = algo.BackTestBuyAndHold()
+        self.__subscribe_to_update()
 
     def run(self):
         self.__feed.prepare()
+        self.__algorithm.prepare()
         self.update(self.ev_start, [])
         while self.__feed.valid():
             self.__get_next_data()
-
         self.update(self.ev_end, [])
 
     def __get_next_data(self):
         data = self.__feed.get()
         self.update(self.ev_data, [data])
-        print data
 
+    def __subscribe_to_update(self):
+        self.subscribe(self.ev_start, self.__algorithm.start)
+        self.subscribe(self.ev_data, self.__algorithm.on_data)
