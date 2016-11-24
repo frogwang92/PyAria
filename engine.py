@@ -1,9 +1,11 @@
 import subject
 import feed.tickfeed as fd
 import algorithm.backtest_buy_and_hold as algo
+import broker.backtestbroker as broker
 
 
 class Engine(subject.Subject):
+    """Engine class is the place to connect everybody together"""
     def __init__(self):
         super(Engine, self).__init__()
         self.ev_start = subject.Event()
@@ -12,6 +14,7 @@ class Engine(subject.Subject):
         self.ev_data = subject.Event()
         self.__feed = fd.TickFeed("test.csv")
         self.__algorithm = algo.BackTestBuyAndHold()
+        self.__broker = broker.BackTestBroker()
         self.__subscribe_to_update()
 
     def run(self):

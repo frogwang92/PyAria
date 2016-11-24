@@ -29,14 +29,15 @@ class Engine(subject.Subject):
     def update_event1_with_args(self):
         self.update(self.test_event, [1, 2, 3])
 
-engine = Engine()
-ob1 = Observer()
-ob2 = Observer2()
+if __name__ == "__main__":
+    engine = Engine()
+    ob1 = Observer()
+    ob2 = Observer2()
 
-engine.subscribe(engine.test_event, ob1.notify)
-engine.subscribe(engine.test_event, ob2.notify)
-engine.update_event1()
-engine.update_event1_with_args()
+    engine.subscribe(engine.test_event, ob1.notify)
+    engine.subscribe(engine.test_event, ob2.notify)
+    engine.update_event1()
+    engine.update_event1_with_args()
 
-engine.unsubscribe(engine.test_event, ob1.notify)
-engine.update_event1()
+    engine.unsubscribe(engine.test_event, ob1.notify)
+    engine.update_event1()
