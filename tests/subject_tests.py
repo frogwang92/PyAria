@@ -1,3 +1,4 @@
+from __future__ import print_function
 import subject
 
 
@@ -6,15 +7,7 @@ class Observer(object):
         pass
 
     def notify(self, args):
-        print "notified"
-
-
-class Observer2(object):
-    def __init__(self):
-        pass
-
-    def notify(self, args):
-        print "obs2 notified, args: %d" % (len(args))
+        print("obs notified, args: {}".format(args))
 
 
 class Engine(subject.Subject):
@@ -24,20 +17,21 @@ class Engine(subject.Subject):
         self.test_event = subject.Event()
 
     def update_event1(self):
-        self.update(self.test_event, [])
+        print("***event 1 updated with no argument***")
+        self.update(self.test_event)
 
     def update_event1_with_args(self):
-        self.update(self.test_event, [1, 2, 3])
+        print("***event 1 updated with args {}***".format(1, 2, 3))
+        self.update(self.test_event, 1, 2, 3)
 
-if __name__ == "__main__":
-    engine = Engine()
-    ob1 = Observer()
-    ob2 = Observer2()
+engine = Engine()
+ob = Observer()
 
-    engine.subscribe(engine.test_event, ob1.notify)
-    engine.subscribe(engine.test_event, ob2.notify)
-    engine.update_event1()
-    engine.update_event1_with_args()
+engine.subscribe(engine.test_event, ob.notify)
+engine.subscribe(engine.test_event, lambda args: print("notified to a lambda with args {}".format(args)))
+engine.update_event1()
+engine.update_event1_with_args()
 
-    engine.unsubscribe(engine.test_event, ob1.notify)
-    engine.update_event1()
+print("unsubscribe ob.notify from engine.test_event")
+engine.unsubscribe(engine.test_event, ob.notify)
+engine.update_event1()
