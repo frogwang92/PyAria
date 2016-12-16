@@ -3,7 +3,7 @@ class BackTestBuyAndHold(object):
         pass
 
     def on_data(self, args):
-        print args[0]
+        print(args[0])
 
     def start(self, args):
         pass

@@ -17,9 +17,8 @@ class BackTestBroker(subject.Subject):
         :type price: float
         :type money: float
         """
-
         holds = money/price
-        self.update(self.ev_bought, [-money, holds])
+        self.update(self.ev_bought, -money, holds)
 
     def sell(self, price, holds):
         """
@@ -28,7 +27,7 @@ class BackTestBroker(subject.Subject):
         :type holds: float
         """
         money = price * holds
-        self.update(self.ev_selled, [money, -holds])
+        self.update(self.ev_selled, money, -holds)
 
 
 class Portfolio(object):
@@ -36,7 +35,7 @@ class Portfolio(object):
     support one hold only currently
     seperate portfolio from broker because one portfolio may trade with multi broker in the future
     """
-    def __init__(self, money = 1000000, holds = 0):
+    def __init__(self, money=1000000, holds=0):
         self.money = money
         self.holds = holds
 
